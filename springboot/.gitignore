@@ -1,5 +1,6 @@
 HELP.md
 target/
+src/test/java/com/lyp/blog/BlogApplicationTests.java
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
