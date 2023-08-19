@@ -1,11 +1,15 @@
 package com.lyp.blog;
 
-import com.lyp.blog.Utils.FileOperation;
-import com.lyp.blog.Utils.MarkdownCorrection;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 
 @SpringBootTest
 class BlogApplicationTests {
@@ -13,16 +17,33 @@ class BlogApplicationTests {
 	@Test
 	void contextLoads() {
 
-//		String markdown = FileOperation.readFile("markdown/notes/A Survey on Advancing the DBMS Query Optimizer.md");
-//
-//		String[] markdownRegex = new String[]{"\u200B\t\t", "<img src=\""};
-//
-//		HashMap<String, String> markdownReplaceMap = new HashMap<>();
-//		markdownReplaceMap.put("\u200B\t\t", "&emsp;&emsp;");
-//		markdownReplaceMap.put("<img src=\"", "<img src=\"http://120.77.177.229:8082/" + "123" + "/");
-//
-//		System.out.println(MarkdownCorrection.correct(markdown, markdownRegex, markdownReplaceMap, true));
+		System.out.println(lastModifiedTime(new File("markdown/MainPage.md")));
 
+	}
+
+	public static String lastModifiedTime(File file) {
+		if (file == null) {
+			return null;
+		}
+
+		BasicFileAttributes attr = null;
+		try {
+			Path path =  file.toPath();
+			attr = Files.readAttributes(path, BasicFileAttributes.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Instant instant = null;
+		if (attr != null) {
+			instant = attr.lastModifiedTime().toInstant();
+		}
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		if (instant != null) {
+			return format.format(instant.getEpochSecond() * 1000L);
+		}
+		return  null;
 	}
 
 }
