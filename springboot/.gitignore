@@ -1,4 +1,5 @@
 !/.gitignore
+.idea
 target/
 src/test/java/com/lyp/blog/BlogApplicationTests.java
 !**/src/main/**/target/
